@@ -5,12 +5,12 @@ class Configuration:
     """
      Store and manage maze configuration settings.
     """
-    width: int
-    height: int
-    entry_point: tuple[int, int]
-    exit_point: tuple[int, int]
-    output_file: str
-    is_perfect: bool
+    width: int = 0
+    height: int = 0
+    entry: tuple[int, int] = (0,0)
+    exit: tuple[int, int] = (0,0)
+    output_file: str = ""
+    perfect: bool = True
     # More keys to be added?
 
     @classmethod
@@ -28,24 +28,9 @@ class Configuration:
             print(error)
             return False
         number_of_keys = 0
-        for key in config.keys():
-            if key == "width":
-                cls.width = config[key]
-                number_of_keys += 1
-            elif key == "height":
-                cls.height = config[key]
-                number_of_keys += 1
-            elif key == "entry":
-                cls.entry_point = config[key]
-                number_of_keys += 1
-            elif key == "exit":
-                cls.exit_point = config[key]
-                number_of_keys += 1
-            elif key == "output_file":
-                cls.output_file = config[key]
-                number_of_keys += 1
-            elif key == "perfect":
-                cls.is_perfect = config[key]
+        for key, value in config.items():
+            if hasattr(Configuration, key):
+                setattr(Configuration, key, value)
                 number_of_keys += 1
         if number_of_keys != 6:  # Must be changed if we add more keys
             print("Missing some keys, Please check.")
@@ -84,6 +69,7 @@ def get_config() -> dict[str, Any]:
     for line in lines:
         pair = line.replace(" ", "").split("=")
         key = pair[0]
+        value = pair[1]
         try:
             value = int(pair[1])
         except ValueError:
