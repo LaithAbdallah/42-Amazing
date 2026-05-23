@@ -1,5 +1,6 @@
 from typing import Any
 
+
 def get_config() -> dict[str, Any]:
     """
     Parse configuration lines into a dictionary and validate them for errors.
@@ -14,7 +15,7 @@ def get_config() -> dict[str, Any]:
     for line in lines:
         pair = line.replace(" ", "").split("=")
         key = pair[0]
-        value = pair[1]
+        value: Any = pair[1]
         try:
             value = int(pair[1])
         except ValueError:
@@ -48,8 +49,18 @@ def read_config() -> list[str]:
     return lines_read
 
 
-def convert_point(point: str, value: str) -> dict[str, int] | None:
+def convert_point(point: str, value: Any) -> dict[str, int] | None:
+    """
+    Convert a comma-separated string into a point dictionary.
 
+    Args:
+        point: The name of the point (e.g. "ENTRY" or "EXIT").
+        value: The comma-separated string to convert.
+
+    Returns:
+        dict[str, int]: The converted point dictionary with "x" and "y" keys,
+        or None if the conversion fails.
+    """
     value = value.split(",")
     try:
         converted_point = {
@@ -64,6 +75,16 @@ def convert_point(point: str, value: str) -> dict[str, int] | None:
 
 
 def check_borders(border: str) -> None:
+    """
+    Validate that a border attribute is a positive integer.
+
+    Args:
+        border: The name of the border attribute
+         to check ("width" or "height").
+
+    Raises:
+        ConfigError: If the border value is not a positive integer.
+    """
     from configuration import Configuration, ConfigError
 
     Configuration.load_config()
@@ -78,6 +99,15 @@ def check_borders(border: str) -> None:
 
 
 def check_points(point: str) -> None:
+    """
+    Validate that a point is within the maze's boundaries.
+
+    Args:
+        point: The name of the point attribute to check ("entry" or "exit").
+
+    Raises:
+        ConfigError: If the point's coordinates exceed the maze's dimensions.
+    """
     from configuration import Configuration, ConfigError
 
     Configuration.load_config()

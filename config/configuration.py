@@ -13,7 +13,6 @@ class Configuration:
     perfect: bool = True
     # More keys to be added?
 
-
     @classmethod
     def load_config(cls) -> bool:
         """
@@ -38,10 +37,15 @@ class Configuration:
             return False
         return True
 
-
     @classmethod
     def validate_config(cls) -> bool:
+        """
+        Validate the loaded configuration values.
 
+        Returns:
+            bool: True if the configuration is valid,
+            otherwise False.
+        """
         if not cls.load_config():
             return False
 
@@ -55,8 +59,16 @@ class Configuration:
             return False
         if not isinstance(cls.perfect, bool):
             return False
+        if (Configuration.entry["x"] == Configuration.exit["x"] and
+                Configuration.entry["y"] == Configuration.exit["y"]):
+            print("Entry and exit points can't have the same coordinates")
+            return False
+
         return True
 
 
 class ConfigError(Exception):
+    """
+    Exception raised for configuration errors.
+    """
     pass
