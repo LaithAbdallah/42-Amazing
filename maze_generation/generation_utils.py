@@ -133,10 +133,10 @@ def generate_42(height: int, width: int, maze: list[list[Cell]],
         generate_number_2(height, width, maze)
         drew_42 = True
 
-    for row in range(height):  # Push '42' cells to the stack
-        for column in range(width):
-            if maze[row][column].visited:
-                stack.append((row, column))
+        for row in range(height):  # Push '42' cells to the stack
+            for column in range(width):
+                if maze[row][column].visited:
+                    stack.append((row, column))
 
     return drew_42
 
@@ -181,7 +181,8 @@ def generate_paths(height: int, width: int) -> None:
 
     if not generate_42(height, width, maze, stack):
         print("Couldn't generate 42 symbol!")  # To be moved later
-    unvisited -= 18  # Cells visited while drawing '42'
+    else:
+        unvisited -= 18  # Cells visited while drawing '42'
 
     while unvisited:
         current_cell = maze[x][y]
@@ -271,4 +272,4 @@ def maze_output(height: int, width: int, maze: list[list[Cell]]) -> None:
             file.write("\n")
 
 
-generate_paths(10, 14)
+generate_paths(9, 10)
