@@ -8,7 +8,7 @@ def get_config() -> dict[str, Any]:
     Returns:
         dict[str, Any]: Dictionary of configuration key-value pairs.
     """
-    from configuration import ConfigError
+    from config.configuration import ConfigError
 
     config: dict[str, Any] = dict()
     lines = read_config()
@@ -23,7 +23,7 @@ def get_config() -> dict[str, Any]:
         if key in ["ENTRY", "EXIT"]:
             value = convert_point(key, value)
         if key == "PERFECT":
-            value = True if key == "True" else False
+            value = True if value == "True" else False
         if len(pair) > 2:
             raise ConfigError("Wrong Key=Value format.")
         if key in config.keys():
@@ -85,7 +85,7 @@ def check_borders(border: str) -> None:
     Raises:
         ConfigError: If the border value is not a positive integer.
     """
-    from configuration import Configuration, ConfigError
+    from config.configuration import Configuration, ConfigError
 
     Configuration.load_config()
     attribute = getattr(Configuration, border)
@@ -108,7 +108,7 @@ def check_points(point: str) -> None:
     Raises:
         ConfigError: If the point's coordinates exceed the maze's dimensions.
     """
-    from configuration import Configuration, ConfigError
+    from config.configuration import Configuration, ConfigError
 
     Configuration.load_config()
     attribute = getattr(Configuration, point)

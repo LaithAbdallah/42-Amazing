@@ -1,11 +1,21 @@
-from configuration_utils import check_borders, check_points, get_config
+from config.configuration_utils import check_borders, check_points, get_config
 
 
 class Configuration:
     """
-     Store and manage maze configuration settings.
+    Store and manage maze configuration settings.
+
+    Attributes:
+        width: The width of the maze in cells.
+        height: The height of the maze in cells.
+        entry: The entry point coordinates as {"x": col, "y": row}.
+        exit: The exit point coordinates as {"x": col, "y": row}.
+        output_file: The path to the output file.
+        perfect: If True, the maze will have exactly one
+         path between the entry and the exit.
     """
-    width: int = 0
+
+    width: int = 1
     height: int = 1
     entry: dict[str, int] = {"x": 0, "y": 0}
     exit: dict[str, int] = {"x": 0, "y": 0}
