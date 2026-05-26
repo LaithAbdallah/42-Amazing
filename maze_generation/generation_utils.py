@@ -273,4 +273,4 @@ def maze_output(height: int, width: int, maze: list[list[Cell]]) -> None:
             file.write("\n")
 
 
-generate_paths(9, 10)
+# generate_paths(9, 10)

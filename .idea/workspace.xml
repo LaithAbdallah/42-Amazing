@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="633c6711-0db4-4227-930f-28686de8f026" name="Changes" comment="fixed 42 drawing error on smaller sizes">
+      <change beforePath="$PROJECT_DIR$/algorithm/find_paths.py" beforeDir="false" afterPath="$PROJECT_DIR$/algorithm/find_paths.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.txt" beforeDir="false" afterPath="$PROJECT_DIR$/config.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/maze_generation/generation_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/maze_generation/generation_utils.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;history&quot;: [
+    {
+      &quot;state&quot;: &quot;CLOSED&quot;,
+      &quot;assignee&quot;: &quot;LaithAbdallah&quot;
+    }
+  ],
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;CLOSED&quot;,
+    &quot;assignee&quot;: &quot;LaithAbdallah&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/LaithAbdallah/42-Amazing.git&quot;,
+    &quot;accountId&quot;: &quot;749576ec-882d-4bc4-9895-adf8d11111bc&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="3E0SJndYICF4Rheqw2HlrNTgfmZ" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python.configuration.executor&quot;: &quot;Run&quot;,
+    &quot;Python.configuration_utils.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;ai.playground.ignore.import.keys.banner.in.settings&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;maze__generation&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Laith/Desktop/42-Amazing&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Laith\Desktop\42-Amazing" />
+      <recent name="C:\Users\Laith\Desktop\42-Amazing\config" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="configuration" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="42-Amazing" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/config" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="RUN_TOOL" value="" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/config/configuration.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.configuration" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-PY-253.30387.127" />
+        <option value="bundled-python-sdk-3944b0c99280-6d6dccd035ac-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-253.30387.127" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="633c6711-0db4-4227-930f-28686de8f026" name="Changes" comment="" />
+      <created>1779313925953</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1779313925953</updated>
+      <workItem from="1779313927249" duration="734000" />
+      <workItem from="1779486261988" duration="13148000" />
+      <workItem from="1779499518291" duration="191000" />
+      <workItem from="1779499736663" duration="4894000" />
+      <workItem from="1779505344288" duration="693000" />
+      <workItem from="1779560418481" duration="18102000" />
+      <workItem from="1779585002951" duration="637000" />
+      <workItem from="1779638320581" duration="3512000" />
+      <workItem from="1779641919799" duration="9699000" />
+      <workItem from="1779654177551" duration="254000" />
+      <workItem from="1779654447877" duration="9554000" />
+      <workItem from="1779664336619" duration="1146000" />
+      <workItem from="1779676118937" duration="5184000" />
+      <workItem from="1779742453922" duration="17836000" />
+      <workItem from="1779818857018" duration="331000" />
+    </task>
+    <task id="LOCAL-00001" summary="add configuration.py file and default config.txt">
+      <option name="closed" value="true" />
+      <created>1779314034735</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1779314034735</updated>
+    </task>
+    <task id="LOCAL-00002" summary="fix an error and make the attributes assignment shorter, add .idea to .gitignore">
+      <option name="closed" value="true" />
+      <created>1779490174609</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1779490174609</updated>
+    </task>
+    <task id="LOCAL-00003" summary="added new methods/functions but there are still some issues that need to be solved">
+      <option name="closed" value="true" />
+      <created>1779503134549</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1779503134549</updated>
+    </task>
+    <task id="LOCAL-00004" summary="fix flake8 and mypy issues for config folder and add the same-point check for entry/exit">
+      <option name="closed" value="true" />
+      <created>1779507768885</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1779507768885</updated>
+    </task>
+    <task id="LOCAL-00005" summary="removed .idea">
+      <option name="closed" value="true" />
+      <created>1779507855384</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1779507855384</updated>
+    </task>
+    <task id="LOCAL-00006" summary="add maze_generation algorithm files and fixed some stuff on config">
+      <option name="closed" value="true" />
+      <created>1779742772108</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1779742772108</updated>
+    </task>
+    <task id="LOCAL-00007" summary="fixed 42 drawing error on smaller sizes">
+      <option name="closed" value="true" />
+      <created>1779744675949</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1779744675949</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="add configuration.py file and default config.txt" />
+    <MESSAGE value="fix an error and make the attributes assignment shorter, add .idea to .gitignore" />
+    <MESSAGE value="added new methods/functions but there are still some issues that need to be solved" />
+    <MESSAGE value="fix flake8 and mypy issues for config folder and add the same-point check for entry/exit" />
+    <MESSAGE value="removed .idea" />
+    <MESSAGE value="add maze_generation algorithm files and fixed some stuff on config" />
+    <MESSAGE value="fixed 42 drawing error on smaller sizes" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed 42 drawing error on smaller sizes" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/42_Amazing$configuration_utils.coverage" NAME="configuration_utils Coverage Results" MODIFIED="1779506073678" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/config" />
+    <SUITE FILE_PATH="coverage/42_Amazing$configuration.coverage" NAME="configuration Coverage Results" MODIFIED="1779754173927" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/config" />
+    <SUITE FILE_PATH="coverage/42_Amazing$test.coverage" NAME="test Coverage Results" MODIFIED="1779506115763" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/config" />
+  </component>
+</project>
