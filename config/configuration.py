@@ -1,4 +1,5 @@
 from config.configuration_utils import check_borders, check_points, get_config
+import config
 
 
 class Configuration:
@@ -64,7 +65,7 @@ class Configuration:
             check_borders("height")
             check_points("entry")
             check_points("exit")
-        except ConfigError as error:
+        except config.ConfigError as error:
             print(error)
             return False
         if not isinstance(cls.perfect, bool):

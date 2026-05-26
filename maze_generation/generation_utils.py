@@ -162,7 +162,7 @@ def generate_maze(height: int, width: int) -> list[list[Cell]]:
     return maze
 
 
-def generate_paths(height: int, width: int) -> None:
+def generate_paths(height: int, width: int) -> list[list[Cell]]:
     """
     Generate a perfect maze using iterative depth-first search
      with backtracking.
@@ -220,7 +220,8 @@ def generate_paths(height: int, width: int) -> None:
             stack.pop()
             x, y = stack[-1][0], stack[-1][1]
 
-    maze_output(height, width, maze)  # To be moved later
+    # maze_output(height, width, maze)  # To be moved later
+    return maze
 
 
 # Gets hexa representation for a single maze cell,
@@ -271,4 +272,4 @@ def maze_output(height: int, width: int, maze: list[list[Cell]]) -> None:
             file.write("\n")
 
 
-generate_paths(10, 14)
+# generate_paths(10, 14)
