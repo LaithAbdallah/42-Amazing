@@ -1,5 +1,4 @@
-# import queue
-from maze_generation.generation_utils import generate_paths, get_hexa, maze_output
+from maze_generation import generate_paths, maze_output
 from config import Configuration as config
 
 
@@ -52,7 +51,7 @@ class BFS:
             current = self.queue.pop(0)
             self.visited.append(current)
             if current == self.exit:
-                break
+                return True
             idx = 0
             for i in self.directions:
                 if self.can_i_go(current, idx):
@@ -63,30 +62,40 @@ class BFS:
                         self.parent_map[neighbor] = current
                 idx += 1
         if current != self.exit:
-            print("there is no path")
+            return False
 
     def get_path(self):
+
         current = self.exit
         path = [current]
-        while self.start != self.parent_map[current]:
-            current = self.parent_map[current]
-            path.append(current)
-        path.append(self.start)
-        first_point = path.pop()
-        while path:
-            second_point = path.pop()
-            total = (second_point[0] - first_point[0],
-                     second_point[1] - first_point[1])
-            directions = {(-1, 0): "N", (1, 0): "S",
-                         (0, -1): "W", (0, 1): "E"}
-            self.path += directions[total]
-            first_point = second_point
 
-        return path
+        if self.find_the_path():
+            while self.start != self.parent_map[current]:
+                current = self.parent_map[current]
+                path.append(current)
+            path.append(self.start)
+            first_point = path.pop()
+            while path:
+                second_point = path.pop()
+                total = (second_point[0] - first_point[0],
+                         second_point[1] - first_point[1])
+                directions = {(-1, 0): "N", (1, 0): "S",
+                              (0, -1): "W", (0, 1): "E"}
+                self.path += directions[total]
+                first_point = second_point
 
+        return self.path
 
-a = BFS()
-a.find_the_path()
-maze_output(config.height, config.width, a.cells)
-a.get_path()
-print(a.path)
+def run() -> None:
+
+    config.load_config()
+
+    maze = BFS()
+    path = maze.get_path()
+    maze_output(config.height, config.width, maze.cells)
+    with open(config.output_file, "a") as file:
+        file.write(f"\n{maze.start[0]}, {maze.start[1]}\n")
+        file.write(f"{maze.exit[0]}, {maze.exit[1]}\n")
+        file.write(path)
+        file.write("\n")
+
