@@ -39,7 +39,7 @@ def main() -> None:
         return
 
     run()
-    display_output(send_specs())
+    display_output(send_specs(), True)
 
 
 if __name__ == "__main__":

@@ -8,7 +8,7 @@ window_connection = mlx.mlx_new_window(connection, 2560, 1440, "A_MAZE_ING")
 data = {}
 thems = []
 indx_them = 0
-
+show_path = True
 first_set = {
     "1": "images/first_set/1.png", "2": "images/first_set/2.png", "3": "images/first_set/3.png",
     "4": "images/first_set/4.png", "5": "images/first_set/5.png", "6": "images/first_set/6.png",
@@ -115,8 +115,9 @@ def draw_points(entry_coords: list[int], exit_coords: list[int]) -> None:
     mlx.mlx_put_image_to_window(connection, window_connection, exit_img[0], exit_coords[0], exit_coords[1])
 
 
-def display_output(specs: dict[str, list[int] | str | int]) -> None:
+def display_output(specs: dict[str, list[int] | str | int], first_time: bool) -> None:
 
+    global show_path
     global data # check if the global is allowed
     data = specs # to use it on change color and remove the path
 
@@ -137,10 +138,15 @@ def display_output(specs: dict[str, list[int] | str | int]) -> None:
 
     draw_empty_maze(maze, maze_width, x, y)
     draw_points(entry_coords, exit_coords)
-    draw_path(path, entry_coords)
-    mlx.mlx_key_hook(window_connection,  quit, {"m_ptr": connection, "w_ptr": window_connection, "mlx": mlx})
-
-    mlx.mlx_loop(connection)
+    if show_path:
+        draw_path(path, entry_coords)
+        show_path = False
+    else:
+        show_path = True
+    mlx.mlx_key_hook(window_connection,  buttons, {"m_ptr": connection, "w_ptr": window_connection, "mlx": mlx})
+    
+    if first_time:
+        mlx.mlx_loop(connection)
 
 
 
@@ -186,9 +192,10 @@ def display_output(specs: dict[str, list[int] | str | int]) -> None:
 # mlx.mlx_put_image_to_window(connection, window_connection, quitt[0], 1500, 670)
 
 
-def quit(keynum, mystuff):
+def buttons(keynum, mystuff):
     global indx_them
     global data
+    global show_path
     if keynum == 113 or keynum == 81:  # q or Q to quit
         obj = mystuff["mlx"]
         obj.mlx_destroy_window(mystuff["m_ptr"], mystuff["w_ptr"])
@@ -198,6 +205,16 @@ def quit(keynum, mystuff):
         indx_them += 1
         if indx_them >= len(thems):
             indx_them = 0
-        display_output(data)
+        display_output(data, False)
+    
+    elif keynum == 114 or keynum == 82:
+        from a_maze_ing import send_specs
+        from algorithm.find_paths import run
+        run()
+        show_path = True
+        display_output(send_specs(), False)
+    
+    elif keynum == 115 or keynum == 83:
+        display_output(data, False)
 
 
