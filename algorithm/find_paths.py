@@ -9,25 +9,27 @@ class BFS:
     start = (config.entry["x"], config.entry["y"])  # get the start point
     exit = (config.exit["x"], config.exit["y"])  # get the exit point
 
-    directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
-    visited: list[tuple[int, int]] = []
-    parent_map: dict[tuple[int, int], tuple[int, int]] = dict()
-    queue = []
-    path = ""
+    directions = [(0, -1), (0, 1), (-1, 0), (1, 0)]
+    def __init__(self) -> None:
+
+        self.visited: list[tuple[int, int]] = []
+        self.parent_map: dict[tuple[int, int], tuple[int, int]] = dict()
+        self.queue = []
+        self.path = ""
 
     def can_i_go(self, current: tuple[int, int], idx: int) -> bool:
         curr_x, curr_y = current[0], current[1]
         if idx == 0:
-            if self.cells[curr_x][curr_y].north == 1:
+            if self.cells[curr_y][curr_x].north == 1:
                 return False
         if idx == 1:
-            if self.cells[curr_x][curr_y].south == 1:
+            if self.cells[curr_y][curr_x].south == 1:
                 return False
         if idx == 2:
-            if self.cells[curr_x][curr_y].west == 1:
+            if self.cells[curr_y][curr_x].west == 1:
                 return False
         if idx == 3:
-            if self.cells[curr_x][curr_y].east == 1:
+            if self.cells[curr_y][curr_x].east == 1:
                 return False
         return True
 
@@ -58,7 +60,7 @@ class BFS:
                     if isinstance(self.is_available(current, i), tuple):
                         neighbor = self.is_available(current, i)
                         self.queue.append(neighbor)
-                        self.visited.append(neighbor)
+                        # self.visited.append(neighbor)
                         self.parent_map[neighbor] = current
                 idx += 1
         if current != self.exit:
@@ -79,8 +81,8 @@ class BFS:
                 second_point = path.pop()
                 total = (second_point[0] - first_point[0],
                          second_point[1] - first_point[1])
-                directions = {(-1, 0): "N", (1, 0): "S",
-                              (0, -1): "W", (0, 1): "E"}
+                directions = {(-1, 0): "W", (1, 0): "E",
+                              (0, -1): "N", (0, 1): "S"}
                 self.path += directions[total]
                 first_point = second_point
 

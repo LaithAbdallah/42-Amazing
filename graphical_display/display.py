@@ -5,6 +5,9 @@ from time import sleep
 mlx = Mlx()
 connection = mlx.mlx_init()
 window_connection = mlx.mlx_new_window(connection, 2560, 1440, "A_MAZE_ING")
+data = {}
+thems = []
+indx_them = 0
 
 first_set = {
     "1": "images/first_set/1.png", "2": "images/first_set/2.png", "3": "images/first_set/3.png",
@@ -13,7 +16,8 @@ first_set = {
     "A": "images/first_set/A.png", "B": "images/first_set/B.png", "C": "images/first_set/C.png",
     "D": "images/first_set/D.png", "E": "images/first_set/E.png", "F": "images/first_set/F.png",
     "0": "images/first_set/0.png", "entry": "images/first_set/entry.png",
-    "exit": "images/first_set/exit.png"
+    "exit": "images/first_set/exit.png", "path": "images/first_set/path.png",
+    "background": "images/first_set/background.png"
 }
 
 second_set = {
@@ -23,11 +27,24 @@ second_set = {
     "A": "images/second_set/A.png", "B": "images/second_set/B.png", "C": "images/second_set/C.png",
     "D": "images/second_set/D.png", "E": "images/second_set/E.png", "F": "images/second_set/F.png",
     "0": "images/second_set/0.png", "entry": "images/second_set/entry.png",
-    "exit": "images/second_set/exit.png"
+    "exit": "images/second_set/exit.png", "path": "images/first_set/path.png",
+    "background": "images/first_set/background.png"
 }
 
-string = "9157913D13939179555555153B93915553B953939391555179153B939553AE93AAC3AC6AAC56955393A96C2C6A93D06C3C6C6C6A957A96ABC2AC6D3A856AAABAC17AC553C3D2AAAC53E93AAC3E956D55117AA956C3AC16C3D12AE93C6AAC3E92957C3C3C6AC3BC56AAC3C56D1553AA96C4557AC3A93C16EA96C55683C56AC3956BAD52968539687AD155697AAAC539553ABAEAC3A93AA93913AA957C16C3D2A9386D43AC3A9696957856AC53C457C46A9696AAC2AEC2AC6C6917A95692C6AE9396ABAC456D4552D5295079551556ABC56AD6853AC39552C52A956E95296A83C6A95515553C53EAD696956953A83D3A93C7AC3C693E93EC29516D6ABAEC5546D5693BAD545693C3A95696AAC3AC6A956D6956C56C556AD693946C139539553AAAC53953AC56AC3BC56C3C2B968395569791393952956AC393EAC3C6D3AAA817C6BC695547C4555383C2C3AC6955456AC6AC3AAD3C3AAC543A9512C6AAC3914796B95117917AEC3ABAAD52D5517A9547AAC3C3C6AD516A87AE956C3AAC55692C3AE96C3C516C6AA93C395296C5396E969297C13ABAE92969396C6D1552A96C56952B969392C6C3C6D6A9796C39692C693EAAAC56AC56AC5553E93EAA9157C3AAABAC6A953C5395685697C696E93AC3A84553C393A9553C56C3AC6A9392C6AAA93AC3C53AAD3C53A9178556AC3AAA95387AEAAAD3C1517C43BAAC6E93AAAAAA9693C683853AC2C56955696AAA87AE9456AC147C3A95546AA9556C46AAAEAD68556AC7AC3C3B96953C3C6AAFC56FFFC3E9396AA91396C4555793AAC3C53E95569543AD4683C3C1693AAFD5157F9296AABAAEAEC3951553AA869293C56D156D56C393E83AD296AEAFFFAFFFAEC3AAC6C3853AC3E93AAAE96AEC3913A9555556AC56EC3AC3C3A93FAFD54556AA9396E92C3C56AC6A96BA956AAC6C395553A955396ABABC6AEFAFFFB9556C2AAD16C3A93BC53C6D468556C3956A957AAA97AC3C6AC5129503D12C5553E8456D16AAA83BC39553A953BC6D12C552C06947C53A93EC696C3AC5153C3A9553A946C6C47C457AC6BC4553EC393C3A969553C6AC393C396C796BA96EC3BAEAB955555555529529553A93C2ABAAC5693C39296AC56C1556B86A953C2C52AC539555157AC3C4796AAC3EA86C5552C7C6AA9693D1693D443C6947A93C43BAC53BC55696953A96ABC56C55553E9553AA83AC3E96C553A956956AC3D46A97AC539387ABAAC3A85539517969697C6AEAC3C569553AEC556956BA9556A9693C6AA9686A96AC17AC3C3AD2B8153C38545396D528155796916C6D152A96C552AABA96C5696943C3AC5686C3A96E93BAA953AEA953AD2E9513E92C695796AAC469157A96D47AA913C3BAAAD16A86C696C3C47AA96947AA92C57853ABAC5556A93AA95556AAAC7AAAEC56BAC157AD54553AAA9693AC6E9396BC6AC395792AC6AC53D3C6C5546A915786D693A95553AAAAC3AC69556C6D03D2946956EC53C5569455539392AC394553AAC47916C6A856C53C393D116C3AAB9695513C553D297956EAAEC3AA93946C5396E9396C3953C3C6C3AA93C2C6A9697AAD17C568569556C556C6AAA953D46956AA93C6947A953AEAA87A956AD296C569157A93C5513D3953AAEABC393C3BC6AA956B96C3AC3AAA96C55456C55556C5546C5556C56C7C6C56C546C56C556C4556C556C546EC47"
-path = "SSEENESSENNNESSSSWWWNWSWSSSEESSWWSESENEEENEENESEENESEEENWNNEENWNEENWNWWWNNESEENEEEEEEESSSESWSWNNNNWSSWNNWWWSESESSSENESSWWSWWWSSWWSESSWSESENENENWNNEENESSESENNWNENNENESSSEESSWWNWSSSEESSSSSWNNNWNWSSESWSESWWNWWSESSESWSESEESENNNNWNENESSESENNNNNNEESSEENENNWNNWSWWNNNNWNEESENEEESSENNNESSSSWWSWSEENESSSSSESWSSEEENWNENESSSSWWWSEEEESESWSSENEESWSWWSEEENEENNWNWNEEESSEENNENNNWNNWNENNNNWSWNNENWNEESSEENENESESWWSESWSWNWSSSENEEENESENNNNENWWNNWWWWWNWNEENEESWSEENNNNENNESESWSEENNNWNWNNESENEEESSSSSWNWSSSSENESSWSESSSWSWNWSSSSSSENNNNESSSESWSWSWSWNNNNWSSSWNNWWWWWSESEENESSEESESENEEESSSSWWWNWWWWSEESSWSSENENESEEESWSSWNWWSWSWNWSWWWSESENESESSESENNNNENESESESSWSE"
+third_set = {
+    "1": "images/3rd_set/1.png", "2": "images/3rd_set/2.png", "3": "images/3rd_set/3.png",
+    "4": "images/3rd_set/4.png", "5": "images/3rd_set/5.png", "6": "images/3rd_set/6.png",
+    "7": "images/3rd_set/7.png", "8": "images/3rd_set/8.png", "9": "images/3rd_set/9.png",
+    "A": "images/3rd_set/A.png", "B": "images/3rd_set/B.png", "C": "images/3rd_set/C.png",
+    "D": "images/3rd_set/D.png", "E": "images/3rd_set/E.png", "F": "images/3rd_set/F.png",
+    "0": "images/3rd_set/0.png", "entry": "images/3rd_set/entry.png",
+    "exit": "images/3rd_set/exit.png", "path": "images/3rd_set/path.png",
+    "background": "images/3rd_set/background.png"
+}
+
+thems.append(first_set)
+thems.append(second_set)
+thems.append(third_set)
 
 def get_center(width: int, maze_width: int) -> int:
     pixels_width = 26 * maze_width - 6
@@ -53,7 +70,7 @@ def draw_empty_maze(maze: str, maze_width: int, x: int, y: int) -> None:
 
     for cell in maze:
 
-        image = mlx.mlx_png_file_to_image(connection, second_set[f"{cell}"])
+        image = mlx.mlx_png_file_to_image(connection, thems[indx_them][f"{cell}"])
         mlx.mlx_put_image_to_window(connection, window_connection, image[0], x, y)
         # mlx.mlx_do_sync(connection)
         # sleep(0.0000000001)
@@ -83,7 +100,7 @@ def draw_path(path: str, start_point: list[int]):
         elif path[index] == "W":
             x -= 26
 
-        path_pixel = mlx.mlx_png_file_to_image(connection, "images/extra/path.png")
+        path_pixel = mlx.mlx_png_file_to_image(connection, thems[indx_them]["path"])
         mlx.mlx_put_image_to_window(connection, window_connection, path_pixel[0], x, y)
         mlx.mlx_do_sync(connection)
         sleep(0.001)
@@ -91,15 +108,18 @@ def draw_path(path: str, start_point: list[int]):
 
 def draw_points(entry_coords: list[int], exit_coords: list[int]) -> None:
 
-    entry_img = mlx.mlx_png_file_to_image(connection, second_set["entry"]) # To be edited
-    exit_img = mlx.mlx_png_file_to_image(connection, second_set["exit"]) # To be edited
+    entry_img = mlx.mlx_png_file_to_image(connection, thems[indx_them]["entry"]) # To be edited
+    exit_img = mlx.mlx_png_file_to_image(connection, thems[indx_them]["exit"]) # To be edited
 
     mlx.mlx_put_image_to_window(connection, window_connection, entry_img[0], entry_coords[0], entry_coords[1])
     mlx.mlx_put_image_to_window(connection, window_connection, exit_img[0], exit_coords[0], exit_coords[1])
 
 
 def display_output(specs: dict[str, list[int] | str | int]) -> None:
-        
+
+    global data # check if the global is allowed
+    data = specs # to use it on change color and remove the path
+
     entry_point = specs["entry"]
     exit_point = specs["exit"]
     maze_width = specs["width"]
@@ -112,12 +132,13 @@ def display_output(specs: dict[str, list[int] | str | int]) -> None:
     exit_coords = get_coordinates(x, y, [exit_point[0], exit_point[1]])
 
     # Adds a background
-    background = mlx.mlx_png_file_to_image(connection, "images/extra/night.png")
+    background = mlx.mlx_png_file_to_image(connection, thems[indx_them]["background"])
     mlx.mlx_put_image_to_window(connection, window_connection, background[0], 0, 0)
 
     draw_empty_maze(maze, maze_width, x, y)
     draw_points(entry_coords, exit_coords)
     draw_path(path, entry_coords)
+    mlx.mlx_key_hook(window_connection,  quit, {"m_ptr": connection, "w_ptr": window_connection, "mlx": mlx})
 
     mlx.mlx_loop(connection)
 
@@ -166,15 +187,17 @@ def display_output(specs: dict[str, list[int] | str | int]) -> None:
 
 
 def quit(keynum, mystuff):
-    
+    global indx_them
+    global data
     if keynum == 113 or keynum == 81:  # q or Q to quit
         obj = mystuff["mlx"]
         obj.mlx_destroy_window(mystuff["m_ptr"], mystuff["w_ptr"])
         obj.mlx_release(mystuff["m_ptr"])
+    
+    elif keynum == 99 or keynum == 67:  # c or C to change the color
+        indx_them += 1
+        if indx_them >= len(thems):
+            indx_them = 0
+        display_output(data)
 
-    elif keynum == 99 or keynum == 67:  # c or C to quit
-        obj = mystuff["mlx"]
-        obj.mlx_destroy_window(mystuff["m_ptr"], mystuff["w_ptr"])
 
-
-mlx.mlx_key_hook(window_connection,  quit, {"m_ptr": connection, "w_ptr": window_connection, "mlx": mlx})
