@@ -128,7 +128,7 @@ def generate_42(height: int, width: int, maze: list[list[Cell]],
     drew_42 = False
 
     # Only draws '42' if its double the '42' drawing size (5 * 7)
-    if height >= 10 and width >= 14:
+    if height >= 9 and width >= 9:
         generate_number_4(height, width, maze)
         generate_number_2(height, width, maze)
         drew_42 = True

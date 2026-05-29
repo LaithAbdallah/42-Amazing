@@ -1,3 +1,3 @@
-# from maze_generation.generation_utils import generate_paths
-#
-# __all__ = ["generate_paths"]
+from maze_generation.generation_utils import generate_paths, maze_output
+
+__all__ = ["generate_paths", "maze_output"]
