@@ -1,7 +1,7 @@
 # Default Config.txt
-WIDTH = 23
-HEIGHT = 24
-ENTRY = 20,19
-EXIT = 0,0
+WIDTH = 12
+HEIGHT = 11
+ENTRY = 1,1
+EXIT = 6,10
 OUTPUT_FILE = maze.txt
-PERFECT = True
+PERFECT = False

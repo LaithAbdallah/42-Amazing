@@ -36,9 +36,9 @@ class BFS:
     def is_available(self, current: tuple, direction: tuple):
         next_x, next_y = current[0] + direction[0], current[1] + direction[1]
         neighbor = (next_x, next_y)
-        if next_x >= config.height or next_x < 0:
+        if next_y >= config.height or next_y < 0:
             return False
-        if next_y >= config.width or next_y < 0:
+        if next_x >= config.width or next_x < 0:
             return False
         if neighbor in self.visited:
             return False
@@ -67,6 +67,7 @@ class BFS:
         
     def get_path(self):
         self.cells = generate_paths(config.height, config.width) 
+
         current = self.exit
         path = [current]
 

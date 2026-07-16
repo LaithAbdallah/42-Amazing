@@ -6,6 +6,7 @@ from graphical_display import display_output
 def send_specs() -> dict[str, list[str] | str | int]:
 
     Configuration.load_config()
+
     with open(Configuration.output_file, "r") as file:
         
         lines_read = ""
@@ -38,6 +39,8 @@ def main() -> None:
         print("Usage: $> python3 a_maze_ing.py config.txt")
         return
 
+    if not Configuration.validate_config():
+        return 
     run()
     display_output(send_specs(), True)
 

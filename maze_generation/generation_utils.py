@@ -171,8 +171,8 @@ def generate_paths(height: int, width: int) -> list[list[Cell]]:
         height: The height of the maze in cells.
         width: The width of the maze in cells.
     """
-
     maze = generate_maze(height, width)
+    
     stack: list[tuple[int, int]] = []
     unvisited = height * width
     directions = ["north", "east", "west", "south"]
@@ -274,3 +274,6 @@ def maze_output(height: int, width: int, maze: list[list[Cell]]) -> None:
 
 
 # generate_paths(9, 10)
+
+
+
