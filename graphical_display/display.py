@@ -3,7 +3,7 @@ from .display_utils import themes, controls_set
 
 mlx = Mlx()
 connection = mlx.mlx_init()
-window_connection = mlx.mlx_new_window(connection, 2560, 1440, "A_MAZE_ING")
+window_connection = mlx.mlx_new_window(connection, 1920, 1080, "A_maze_ing")
 data = {}
 theme_index = 0
 show_path = True
@@ -39,7 +39,7 @@ def draw_empty_maze(maze: str, maze_width: int, x: int, y: int) -> None:
         # If no. of cells is divisible by maze width then we go to the next row
         if cells % maze_width == 0:
             y += 26
-            x = get_center(2560, maze_width) + 175
+            x = get_center(2560, maze_width) - 150
         cells += 1
 
 
@@ -82,13 +82,13 @@ def draw_controls(x: int) -> None:
     show_img = mlx.mlx_png_file_to_image(connection, controls_set["s"])
     color_img = mlx.mlx_png_file_to_image(connection, controls_set["c"])
 
-    mlx.mlx_put_image_to_window(connection, window_connection, quit_img[0], 350, x)
-    mlx.mlx_put_image_to_window(connection, window_connection, regen_img[0], 350, x + 150)
-    mlx.mlx_put_image_to_window(connection, window_connection, show_img[0], 350, x + 300)
-    mlx.mlx_put_image_to_window(connection, window_connection, color_img[0], 350, x + 450)
+    mlx.mlx_put_image_to_window(connection, window_connection, quit_img[0], 25, x)
+    mlx.mlx_put_image_to_window(connection, window_connection, regen_img[0], 25, x + 100)
+    mlx.mlx_put_image_to_window(connection, window_connection, show_img[0], 25, x + 200)
+    mlx.mlx_put_image_to_window(connection, window_connection, color_img[0], 25, x + 300)
 
 
-def display_output(specs: dict[str, list[int] | str | int], first_time: bool, show: bool)-> None:
+def display_output(specs: dict[str, list[int] | str | int], first_time: bool, show: bool)-> None:    
 
     global show_path
     global data # check if the global is allowed
@@ -100,7 +100,7 @@ def display_output(specs: dict[str, list[int] | str | int], first_time: bool, sh
     maze = specs["maze"]
     path = specs["path"]
 
-    x = get_center(2560, maze_width) + 175
+    x = get_center(2560, maze_width) - 150
     y = 50  # Starts at y = 50
     entry_coords = get_coordinates(x, y, [entry_point[0], entry_point[1]]) 
     exit_coords = get_coordinates(x, y, [exit_point[0], exit_point[1]])
@@ -117,7 +117,7 @@ def display_output(specs: dict[str, list[int] | str | int], first_time: bool, sh
         draw_path(path, entry_coords)
     mlx.mlx_key_hook(window_connection,  buttons, {"m_ptr": connection, "w_ptr": window_connection, "mlx": mlx})
     
-    if first_time:
+    if first_time: 
         mlx.mlx_loop(connection)
 
 
