@@ -42,7 +42,7 @@ def main() -> None:
     if not Configuration.validate_config():
         return 
     run()
-    display_output(send_specs(), True)
+    display_output(send_specs(), True, True)
 
 
 if __name__ == "__main__":

@@ -89,10 +89,19 @@ def check_borders(border: str) -> None:
 
     Configuration.load_config()
     attribute = getattr(Configuration, border)
+
     if isinstance(attribute, int):
+
         if attribute < 1:
             raise ConfigError(f"Wrong Value for {border},"
                               f" It must be greater than zero.")
+
+        if border == "width" and attribute > 55:
+            raise ConfigError(f"Width can't be greater than 55")
+        
+        if border == "height" and attribute > 35:
+                    raise ConfigError(f"Height can't be greater than 35")
+
     else:
         raise ConfigError(f"Wrong data type for {border},"
                           f"It must be integer")
@@ -112,9 +121,11 @@ def check_points(point: str) -> None:
 
     Configuration.load_config()
     attribute = getattr(Configuration, point)
+
     if attribute["x"] >= Configuration.width:
         raise ConfigError(f"{point} point's width can't be"
                           f" greater than maze's width")
+
     if attribute["y"] >= Configuration.height:
         raise ConfigError(f"{point} point's height can't be"
                           f" greater than maze's height")
