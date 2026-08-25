@@ -1,6 +1,6 @@
 # Default Config.txt
-WIDTH = 55
-HEIGHT = 35
+WIDTH = 25
+HEIGHT = 15
 ENTRY = 1,1
 EXIT = 9,9
 OUTPUT_FILE = maze.txt
