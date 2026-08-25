@@ -125,7 +125,7 @@ def display_output(specs: dict[str, list[int] | str | int],
 
     draw_empty_maze(maze, maze_width, x, y)
     draw_points(entry_coords, exit_coords)
-    draw_controls(entry_coords[1])
+    draw_controls(250)
 
     if show:
         draw_path(path, entry_coords)
