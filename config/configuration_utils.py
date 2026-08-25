@@ -97,10 +97,10 @@ def check_borders(border: str) -> None:
                               f" It must be greater than zero.")
 
         if border == "width" and attribute > 55:
-            raise ConfigError(f"Width can't be greater than 55")
-        
+            raise ConfigError("Width can't be greater than 55")
+
         if border == "height" and attribute > 35:
-                    raise ConfigError(f"Height can't be greater than 35")
+            raise ConfigError("Height can't be greater than 35")
 
     else:
         raise ConfigError(f"Wrong data type for {border},"

@@ -5,11 +5,12 @@ from config import Configuration as config
 class BFS:
 
     config.load_config()
-    cells = [] # get the maze
+    cells = []  # get the maze
     start = (config.entry["x"], config.entry["y"])  # get the start point
     exit = (config.exit["x"], config.exit["y"])  # get the exit point
 
     directions = [(0, -1), (0, 1), (-1, 0), (1, 0)]
+
     def __init__(self) -> None:
 
         self.visited: list[tuple[int, int]] = []
@@ -61,12 +62,12 @@ class BFS:
                         self.queue.append(neighbor)
                         # self.visited.append(neighbor)
                         self.parent_map[neighbor] = current
-                idx += 1         
+                idx += 1
         if current != self.exit:
             return False
-        
+
     def get_path(self):
-        self.cells = generate_paths(config.height, config.width) 
+        self.cells = generate_paths(config.height, config.width)
 
         current = self.exit
         path = [current]
@@ -88,6 +89,7 @@ class BFS:
 
         return self.path
 
+
 def run() -> None:
 
     config.load_config()
@@ -100,4 +102,3 @@ def run() -> None:
         file.write(f"{maze.exit[0]}, {maze.exit[1]}\n")
         file.write(path)
         file.write("\n")
-

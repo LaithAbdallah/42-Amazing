@@ -142,7 +142,7 @@ def generate_42(height: int, width: int, maze: list[list[Cell]],
 
 
 def generate_maze(height: int, width: int) -> list[list[Cell]]:
-    """
+    """g import theme
     Create a 2D grid of uninitialized cells.
 
     Args:
@@ -172,7 +172,7 @@ def generate_paths(height: int, width: int) -> list[list[Cell]]:
         width: The width of the maze in cells.
     """
     maze = generate_maze(height, width)
-    
+
     stack: list[tuple[int, int]] = []
     unvisited = height * width
     directions = ["north", "east", "west", "south"]
@@ -271,9 +271,3 @@ def maze_output(height: int, width: int, maze: list[list[Cell]]) -> None:
             for column in range(width):
                 file.write(get_hexa(row, column, maze))
             file.write("\n")
-
-
-# generate_paths(9, 10)
-
-
-
