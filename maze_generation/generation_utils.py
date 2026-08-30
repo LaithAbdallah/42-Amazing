@@ -1,4 +1,4 @@
-from config import Configuration
+from config import Configuration, ConfigError
 from maze_generation.generation import Cell
 from random import randint, choice
 
@@ -138,8 +138,83 @@ def generate_42(height: int, width: int, maze: list[list[Cell]],
                 if maze[row][column].visited:
                     stack.append((row, column))
 
+
+        entry = Configuration.entry
+        if maze[entry["y"]][entry["x"]].is_42:
+            raise ConfigError("Entry point can't be on 42 cells")
+
+        exit = Configuration.exit
+        if maze[exit["y"]][exit["x"]].is_42:
+            raise ConfigError("Exit point can't be on 42 cells")
+
     return drew_42
 
+
+def is_available(y: int, x: int, maze: list[list[Cell]]): 
+
+    
+    if y >= Configuration.height or y < 0 :
+        return False
+    if x >= Configuration.width or x < 0:
+        return False
+
+    if maze[y][x].is_42:
+        return False
+    
+    return True
+
+
+def imperfect_maze(maze: list[list[Cell]]) -> list[list[Cell]]:
+
+    directions = ["north", "east", "west", "south"]
+    height = Configuration.height
+    width = Configuration.width
+
+    for i in range(7):
+        for row in range(height):
+            
+            for column in range(width):
+
+                walls = 0
+                cell = maze[row][column]
+
+                if cell.east:
+                    walls += 1
+                if cell.north:
+                    walls += 1
+                if cell.west:
+                    walls += 1
+                if cell.south:
+                    walls += 1
+
+                if walls == 3:
+                    
+                    wall_broken = False
+                    while (not wall_broken):
+
+                        direction = choice(directions)
+                        
+                        if direction == "north":
+                            if is_available(row - 1, column, maze):
+                                cell.break_wall(maze[row - 1][column], direction)
+                                wall_broken = True
+                        
+                        elif direction == "east":
+                            if is_available(row, column + 1, maze):
+                                cell.break_wall(maze[row][column + 1], direction)
+                                wall_broken = True
+                        
+                        elif direction == "west":
+                            if is_available(row, column - 1, maze):
+                                cell.break_wall(maze[row][column - 1], direction)
+                                wall_broken = True
+
+                        else:
+                            if is_available(row + 1, column, maze):
+                                cell.break_wall(maze[row + 1][column], direction)
+                                wall_broken = True
+
+    return maze
 
 def generate_maze(height: int, width: int) -> list[list[Cell]]:
     """g import theme
@@ -222,6 +297,9 @@ def generate_paths(height: int, width: int) -> list[list[Cell]]:
             x, y = stack[-1][0], stack[-1][1]
 
     # maze_output(height, width, maze)  # To be moved later
+    if not Configuration.perfect:
+        maze = imperfect_maze(maze)
+    
     return maze
 
 

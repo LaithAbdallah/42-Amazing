@@ -1,4 +1,5 @@
 from mlx import Mlx
+from time import sleep
 from graphical_display.display_utils import themes, controls_set
 
 mlx = Mlx()
@@ -66,6 +67,7 @@ def draw_path(path: str, start_point: list[int]):
                                                themes[theme_index]["path"])
         mlx.mlx_put_image_to_window(connection,
                                     window_connection, path_pixel[0], x, y)
+        sleep(0.01)
         mlx.mlx_do_sync(connection)
 
 
@@ -102,7 +104,6 @@ def draw_controls(x: int) -> None:
 def display_output(specs: dict[str, list[int] | str | int],
                    first_time: bool, show: bool) -> None:
 
-    global show_path
     global data  # check if the global is allowed
     data = specs  # to use it on change color and remove the path
 

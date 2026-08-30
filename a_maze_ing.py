@@ -1,6 +1,6 @@
 from sys import argv
 from algorithm import run
-from config import Configuration
+from config import Configuration, ConfigError
 from graphical_display import display_output
 
 
@@ -42,7 +42,11 @@ def main() -> None:
 
     if not Configuration.validate_config():
         return
-    run()
+    try:
+        run()
+    except ConfigError as e:
+        print(e)
+        return
     display_output(send_specs(), True, True)
 
 
