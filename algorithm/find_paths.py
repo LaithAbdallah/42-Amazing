@@ -1,4 +1,4 @@
-from maze_generation import MazeGenerator, Cell
+from mazegen import MazeGenerator, Cell
 from configuration import Configuration as config
 from typing import Any
 
