@@ -1,6 +1,6 @@
 from sys import argv
 from algorithm import run
-from config import Configuration, ConfigError
+from configuration import Configuration, ConfigError
 from graphical_display import display_output
 from typing import Any
 

@@ -8,7 +8,7 @@ def get_config() -> dict[str, Any]:
     Returns:
         dict[str, Any]: Dictionary of configuration key-value pairs.
     """
-    from config.configuration import ConfigError
+    from configuration.configuration import ConfigError
 
     config: dict[str, Any] = dict()
     lines = read_config()
@@ -90,7 +90,7 @@ def check_borders(border: str) -> None:
     Raises:
         ConfigError: If the border value is not a positive integer.
     """
-    from config.configuration import Configuration, ConfigError
+    from configuration.configuration import Configuration, ConfigError
 
     Configuration.load_config()
     attribute = getattr(Configuration, border)
@@ -122,7 +122,7 @@ def check_points(point: str) -> None:
     Raises:
         ConfigError: If the point's coordinates exceed the maze's dimensions.
     """
-    from config.configuration import Configuration, ConfigError
+    from configuration.configuration import Configuration, ConfigError
 
     Configuration.load_config()
     attribute = getattr(Configuration, point)

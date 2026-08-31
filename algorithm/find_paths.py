@@ -1,5 +1,5 @@
 from maze_generation import MazeGenerator, Cell
-from config import Configuration as config
+from configuration import Configuration as config
 from typing import Any
 
 
