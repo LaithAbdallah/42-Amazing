@@ -316,7 +316,7 @@ The plan mostly held, but three things changed along the way:
 - **mypy** — static type checking, including a `--strict` target.
 - **pdb** — interactive debugging through `make debug`.
 - **Make** — a single entry point for installing, running, cleaning and checking the project.
-- **setuptools and build** — used to package the generator into the `mazegen` wheel from `pyproject.toml`.
+- **setuptools and build** — used to package the generator into the `mazegen` wheel from `setup.py`.
 
 ---
 
