@@ -1,4 +1,4 @@
-from random import randint, choice
+from random import randint, choice, seed
 
 
 class Cell:
@@ -285,7 +285,7 @@ class MazeGenerator:
             for colum in range(self.width):
                 self.maze[row].append(Cell())
 
-    def generate_paths(self) -> list[list[Cell]]:
+    def generate_paths(self, seed_id: int) -> list[list[Cell]]:
         """
         Generate a perfect maze using iterative depth-first search
         with backtracking.
@@ -295,6 +295,9 @@ class MazeGenerator:
             width: The width of the maze in cells.
         """
         self.generate_maze()
+
+        if seed_id:
+            seed(seed_id)
 
         stack: list[tuple[int, int]] = []
         unvisited = self.height * self.width
@@ -401,11 +404,13 @@ def main() -> None:
     entry = {"x": 0, "y": 0}
     exit = {"x": 54, "y": 34}
     perfect_maze = False
+    #  You can either enter a seed as an int value or leave it blank or
+    #  zero to have a different maze every time you regenerate
     seed = 1
 
     generator = MazeGenerator(width, height, entry, exit, perfect_maze, seed)
-    generator.generate_paths()
-    generator.maze_output("laith.txt")
+    generator.generate_paths(seed)
+    generator.maze_output("output.txt")
 
 
 if __name__ == "__main__":

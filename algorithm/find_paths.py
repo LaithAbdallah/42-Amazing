@@ -79,7 +79,7 @@ class BFS:
 
     def get_path(self, generator: MazeGenerator) -> str:
 
-        self.cells = generator.generate_paths()
+        self.cells = generator.generate_paths(config.seed)
 
         current = self.exit
         path = [current]

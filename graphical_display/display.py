@@ -106,7 +106,7 @@ def display_output(specs: Any, first_time: bool, show: bool) -> None:
 
     global data  # check if the global is allowed
     data = specs  # to use it on change color and remove the path
-    entry_point, exit_point, maze_width, maze, path = specs
+    maze, entry_point, exit_point, path, maze_width = specs
 
     x = get_center(2560, maze_width) - 150
     y = 50  # Starts at y = 50

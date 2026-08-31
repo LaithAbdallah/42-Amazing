@@ -22,7 +22,7 @@ class Configuration:
     exit: dict[str, int] = {"x": 0, "y": 0}
     output_file: str = ""
     perfect: bool = True
-    seed: int = 1
+    seed: int = 0
     # More keys to be added?
 
     @classmethod
