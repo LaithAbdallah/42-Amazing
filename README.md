@@ -233,7 +233,7 @@ The `configuration` package is reusable in a narrower sense: the parsing helpers
 ├── a_maze_ing.py                    Entry point, argument handling, orchestration
 ├── maze_generation/                 Standalone reusable module: Cell, MazeGenerator
 │   ├── maze_generator.py             
-├── setup.py                   Packaging metadata for the mazegen wheel
+├── setup.py                         Packaging metadata for the mazegen wheel
 ├── Makefile
 ├── LICENSE.md                       MIT license
 ├── config.txt                       Default configuration

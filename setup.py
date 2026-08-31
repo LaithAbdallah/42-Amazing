@@ -4,7 +4,7 @@ setup(
     version="1.0.0",
     author="labdalla, naldibis",
     description="A lightweight procedural maze generator for 42 curriculum",
-    packages=["mazegen"],
+    packages=["maze_generation"],
     install_requires=[
         "requests>=2.25.1",
     ],
