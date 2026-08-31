@@ -1,10 +1,11 @@
 # Default Config.txt
-WIDTH = 10
-HEIGHT = 10
+# Max maze width * height is 55 * 35
+WIDTH = 55
+HEIGHT = 35
 ENTRY = 0,0
-EXIT = 9,9
+EXIT = 54,34
 OUTPUT_FILE = maze.txt
 PERFECT = False
 # You can either enter a seed as an int value or leave it blank or
 # zero to have a different maze every time you regenerate
-SEED = 0
+SEED = 
