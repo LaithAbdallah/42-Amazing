@@ -62,15 +62,14 @@ The grid is followed by a blank line, the entry point, the exit point, and the s
 
 ### Requirements
 
-- Python 3.10 or later (the code uses `X | Y` union syntax and built-in generic types).
+- Python 3.10 or later.
 - Two wheels, both shipped with the repository:
   - `mlx-2.2-py3-none-any.whl`, the graphics library provided by 42.
-  - `mazegen-1.0.0-py3-none-any.whl`, our own maze generator, built from `maze_generation.py` through `pyproject.toml`.
+  - `mazegen-1.0.0-py3-none-any.whl`, our own maze generator, built from `maze_generation.py` through `setup.py`.
 
 ### Installation and execution
 
 ```bash
-make install    # installs both wheels
 make run        # installs if needed, then runs the program
 ```
 
@@ -192,20 +191,16 @@ The renderer maps every hexadecimal character to a pre-rendered 26x26 PNG tile, 
 
 ## Reusability
 
-The reusable component is **`maze_generation.py`**, which contains the `Cell` and `MazeGenerator` classes.
+The reusable component is **`maze_generator.py`**, which contains the `Cell` and `MazeGenerator` classes.
 
 It is a genuinely standalone module: it imports nothing from `configuration`, `algorithm` or `graphical_display`, and depends only on Python's standard `random`. Every parameter it needs is passed to its constructor, and it never reads a file, prints to the screen, or reaches into global state.
 
-To make that independence concrete rather than merely claimed, the module is **packaged and distributed as a wheel**. A `pyproject.toml` at the root declares it as the sole distributable module, and `make install` installs the built `mazegen-1.0.0-py3-none-any.whl` alongside MLX. The rest of the project then consumes it exactly the way any third-party user would, through a plain `import`, which means a broken dependency on our internals would fail loudly instead of going unnoticed.
+To make that independence concrete rather than merely claimed, the module is **packaged and distributed as a wheel**. A `setup.py` at the root declares it as the sole distributable module, and `make install` installs the built `mazegen-1.0.0-py3-none-any.whl` alongside MLX. The rest of the project then consumes it exactly the way any third-party user would, through a plain `import`, which means a broken dependency on our internals would fail loudly instead of going unnoticed.
 
 Building the wheel from source:
 
-```bash
-python -m build --wheel --no-isolation -o dist
-```
-
 ```python
-from maze_generation import MazeGenerator
+from mazegen import MazeGenerator
 
 generator = MazeGenerator(
     width=55,
@@ -220,7 +215,7 @@ maze = generator.generate_paths(seed=1)   # returns the grid as list[list[Cell]]
 generator.maze_output("output.txt")       # writes the hexadecimal representation
 ```
 
-Running `python3 maze_generation.py` directly executes a small demo `main()` that generates a 55x35 maze and writes it to `output.txt`, which makes the module testable in isolation without launching the graphical window.
+Running `python3 maze_generator.py` directly executes a small demo `main()` that generates a 55x35 maze and writes it to `output.txt`, which makes the module testable in isolation without launching the graphical window.
 
 Two design decisions make it portable to another project:
 
@@ -236,12 +231,12 @@ The `configuration` package is reusable in a narrower sense: the parsing helpers
 ```
 .
 ├── a_maze_ing.py                    Entry point, argument handling, orchestration
-├── maze_generation.py               Standalone reusable module: Cell, MazeGenerator
-├── pyproject.toml                   Packaging metadata for the mazegen wheel
+├── maze_generation/                 Standalone reusable module: Cell, MazeGenerator
+│   ├── maze_generator.py             
+├── setup.py                   Packaging metadata for the mazegen wheel
 ├── Makefile
 ├── LICENSE.md                       MIT license
 ├── config.txt                       Default configuration
-├── maze.txt                         Generated output
 ├── mlx-2.2-py3-none-any.whl
 ├── mazegen-1.0.0-py3-none-any.whl   Built distribution of maze_generation.py
 ├── configuration/
@@ -266,13 +261,9 @@ The `configuration` package is reusable in a narrower sense: the parsing helpers
 
 ## Additional features
 
-- **The "42" symbol.** Any maze of at least 9x9 has `4` and `2` carved into its center as solid blocks that the generator cannot alter. The entry and the exit are rejected at validation time if they would land on those cells.
+
 - **Three color themes.** Each theme is a complete set of wall tiles plus its own background, entry, exit and path sprites, cycled at runtime with `C`.
-- **Live regeneration.** Pressing `R` runs the full generation and solving pipeline again and redraws the window, without restarting the program.
-- **Toggleable solution.** Pressing `S` shows or hides the path, so the maze can be looked at unsolved.
 - **Animated path drawing.** The solution is drawn one tile at a time rather than instantly.
-- **Reproducible mazes.** A non-zero `SEED` produces the exact same maze on every run, which was essential for reproducing bugs during development.
-- **Type-checked and documented codebase.** Every module, class and function carries a docstring, and the whole project passes `flake8` and `mypy --strict`, both exposed as make targets.
 - **Packaged generator.** The generator ships as an installable wheel rather than a loose file, so its independence from the rest of the project is enforced by the import system.
 
 ---
@@ -315,9 +306,6 @@ The plan mostly held, but three things changed along the way:
 ### What could be improved
 
 - **Image loading is not cached.** Every redraw re-reads each PNG from disk through `mlx_png_file_to_image`, which is noticeably slow on large mazes. Loading each tile once into a dictionary at startup would fix it.
-- **The BFS visited list is a list, not a set.** Membership testing is therefore linear instead of constant time. It is imperceptible at 55x35 but it is the wrong data structure.
-- **Some global state remains in the display module.** `theme_index`, `show_path` and `data` are module-level globals; wrapping the renderer in a class would make the state explicit and the module easier to reuse.
-- **The entry point is rigid.** The program only accepts the literal argument `config.txt`, so running an alternative configuration means editing or replacing the file rather than passing a different path.
 - **There are no automated tests.** Verification was done by inspection and by eye. A small test suite over the generator and the solver, using fixed seeds, would have been cheap to write and would have caught regressions faster.
 
 ### Tools
@@ -336,32 +324,13 @@ The plan mostly held, but three things changed along the way:
 
 ### Maze generation and pathfinding
 
-- Jamis Buck, *Mazes for Programmers*, Pragmatic Bookshelf — the reference text on maze generation algorithms and their visual signatures.
-- Jamis Buck's blog series on maze algorithms, which covers depth-first search, Prim's, Kruskal's and the trade-offs between them: <https://weblog.jamisbuck.org/2011/2/7/maze-generation-algorithm-recap>
 - Wikipedia, *Maze generation algorithm*: <https://en.wikipedia.org/wiki/Maze_generation_algorithm>
 - Wikipedia, *Breadth-first search*: <https://en.wikipedia.org/wiki/Breadth-first_search>
-- Walter D. Pullen, *Think Labyrinth: Maze Algorithms*, including the description of braiding used for our imperfect mazes: <https://www.astrolog.org/labyrnth/algrithm.htm>
-- Red Blob Games, *Introduction to the A\* Algorithm*, used to compare BFS against the alternatives before settling on BFS: <https://www.redblobgames.com/pathfinding/a-star/introduction.html>
-
-### Python and tooling
-
-- Python documentation, `random` module: <https://docs.python.org/3/library/random.html>
-- mypy documentation, on strict mode and typing classes: <https://mypy.readthedocs.io/>
-- flake8 documentation: <https://flake8.pycqa.org/>
-- Python Packaging User Guide, on `pyproject.toml` and building wheels: <https://packaging.python.org/en/latest/tutorials/packaging-projects/>
-- PEP 639, on declaring licenses in project metadata: <https://peps.python.org/pep-0639/>
-- The MLX documentation provided by 42.
+- Youtube, *Create Wheel Files in Python*: <https://www.youtube.com/watch?v=AM2dgUAdwaQ>
 
 ### Use of AI
 
-AI assistants were used during this project as a debugging and learning aid, never as a code generator. Concretely:
-
-- **Debugging the rendering pipeline.** We used an AI assistant to reason about a black-window bug in the display module, which turned out to be caused by an insufficient number of `mlx_do_sync` calls, and about the `R` key failing to regenerate correctly because of how `mlx_key_hook` was being re-registered on each redraw.
-- **Discussing algorithms before implementing them.** We used it to talk through the braiding approach for imperfect mazes and the alternative grid representations for mazes, in order to compare options. The implementation choices and the code itself are ours.
-- **Understanding tooling errors.** Interpreting some `mypy --strict` messages, particularly around typed dictionaries and the `Any` return annotations.
-- **Documentation.** Reviewing and structuring this README.
-
-AI was not used to write the maze generation algorithm, the BFS solver, the configuration parser or the display logic.
+AI was only used to generate this README.md file, help with docstrings and give resources.
 
 ---
 
