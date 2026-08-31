@@ -22,6 +22,7 @@ class Configuration:
     exit: dict[str, int] = {"x": 0, "y": 0}
     output_file: str = ""
     perfect: bool = True
+    seed: int = 1
     # More keys to be added?
 
     @classmethod
@@ -43,7 +44,7 @@ class Configuration:
             if hasattr(cls, key):
                 setattr(cls, key, value)
                 number_of_keys += 1
-        if number_of_keys != 6:  # Must be changed if we add more keys
+        if number_of_keys < 6:  # Must be changed if we add more keys
             print("Missing some keys, Please check.")
             return False
         return True

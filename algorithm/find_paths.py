@@ -1,11 +1,12 @@
-from maze_generation import generate_paths, maze_output
+from maze_generation import MazeGenerator, Cell
 from config import Configuration as config
+from typing import Any
 
 
 class BFS:
 
     config.load_config()
-    cells = []  # get the maze
+    cells: list[list[Cell]] = []  # get the maze
     start = (config.entry["x"], config.entry["y"])  # get the start point
     exit = (config.exit["x"], config.exit["y"])  # get the exit point
 
@@ -15,7 +16,7 @@ class BFS:
 
         self.visited: list[tuple[int, int]] = []
         self.parent_map: dict[tuple[int, int], tuple[int, int]] = dict()
-        self.queue = []
+        self.queue: list[tuple[int, int]] = []
         self.path = ""
 
     def can_i_go(self, current: tuple[int, int], idx: int) -> bool:
@@ -34,18 +35,27 @@ class BFS:
                 return False
         return True
 
-    def is_available(self, current: tuple, direction: tuple):
-        next_x, next_y = current[0] + direction[0], current[1] + direction[1]
-        neighbor = (next_x, next_y)
+    def check_border(self, next_y: int, next_x: int,
+                     neighbor: tuple[int, int]) -> bool:
+
         if next_y >= config.height or next_y < 0:
             return False
         if next_x >= config.width or next_x < 0:
             return False
         if neighbor in self.visited:
             return False
-        return neighbor
+        return True
 
-    def find_the_path(self) -> None:
+    def is_available(self, current: tuple[int, int],
+                     direction: tuple[int, int]) -> Any:
+
+        next_x, next_y = current[0] + direction[0], current[1] + direction[1]
+        neighbor = (next_x, next_y)
+        if self.check_border(next_y, next_x, neighbor):
+            return neighbor
+        return None
+
+    def find_the_path(self) -> bool:
 
         self.queue.append(self.start)
         while len(self.queue):
@@ -65,9 +75,11 @@ class BFS:
                 idx += 1
         if current != self.exit:
             return False
+        return True
 
-    def get_path(self):
-        self.cells = generate_paths(config.height, config.width)
+    def get_path(self, generator: MazeGenerator) -> str:
+
+        self.cells = generator.generate_paths()
 
         current = self.exit
         path = [current]
@@ -94,9 +106,11 @@ def run() -> None:
 
     config.load_config()
 
+    generator = MazeGenerator(config.width, config.height, config.entry,
+                              config.exit, config.perfect, config.seed)
     maze = BFS()
-    path = maze.get_path()
-    maze_output(config.height, config.width, maze.cells)
+    path = maze.get_path(generator)
+    generator.maze_output("maze.txt")
     with open(config.output_file, "a") as file:
         file.write(f"\n{maze.start[0]}, {maze.start[1]}\n")
         file.write(f"{maze.exit[0]}, {maze.exit[1]}\n")

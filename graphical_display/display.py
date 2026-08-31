@@ -1,6 +1,7 @@
 from mlx import Mlx
 from time import sleep
 from graphical_display.display_utils import themes, controls_set
+from typing import Any
 
 mlx = Mlx()
 connection = mlx.mlx_init()
@@ -17,7 +18,7 @@ def get_center(width: int, maze_width: int) -> int:
 
 def get_coordinates(x: int, y: int, point: list[int]) -> list[int]:
 
-    coordinates = [x + 26 * point[0], y + 26 * point[1]]
+    coordinates = [x + 26 * int(point[0]), y + 26 * int(point[1])]
 
     if point[0] == 0:
         coordinates[0] = x
@@ -46,7 +47,7 @@ def draw_empty_maze(maze: str, maze_width: int, x: int, y: int) -> None:
         cells += 1
 
 
-def draw_path(path: str, start_point: list[int]):
+def draw_path(path: str, start_point: list[int]) -> None:
 
     # Start_point is a list of 2 integers, [0] is width and [1] is height
     x = start_point[0]
@@ -101,17 +102,11 @@ def draw_controls(x: int) -> None:
                                 window_connection, color_img[0], 25, x + 300)
 
 
-def display_output(specs: dict[str, list[int] | str | int],
-                   first_time: bool, show: bool) -> None:
+def display_output(specs: Any, first_time: bool, show: bool) -> None:
 
     global data  # check if the global is allowed
     data = specs  # to use it on change color and remove the path
-
-    entry_point = specs["entry"]
-    exit_point = specs["exit"]
-    maze_width = specs["width"]
-    maze = specs["maze"]
-    path = specs["path"]
+    entry_point, exit_point, maze_width, maze, path = specs
 
     x = get_center(2560, maze_width) - 150
     y = 50  # Starts at y = 50
@@ -138,7 +133,7 @@ def display_output(specs: dict[str, list[int] | str | int],
         mlx.mlx_loop(connection)
 
 
-def buttons(keynum, mystuff):
+def buttons(keynum: int, mystuff: dict[str, Any]) -> None:
 
     global theme_index
     global data

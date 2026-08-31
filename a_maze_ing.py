@@ -2,9 +2,10 @@ from sys import argv
 from algorithm import run
 from config import Configuration, ConfigError
 from graphical_display import display_output
+from typing import Any
 
 
-def send_specs() -> dict[str, list[str] | str | int]:
+def send_specs() -> Any:
 
     Configuration.load_config()
 
@@ -16,22 +17,20 @@ def send_specs() -> dict[str, list[str] | str | int]:
         file.readline()
 
         entry_point = file.readline().replace("\n", "").split(",")
-        entry_point[0] = int(entry_point[0])
-        entry_point[1] = int(entry_point[1])
+        entry = []
+        entry.append(int(entry_point[0]))
+        entry.append(int(entry_point[1]))
 
         exit_point = file.readline().replace("\n", "").split(",")
-        exit_point[0] = int(exit_point[0])
-        exit_point[1] = int(exit_point[1])
+        exit = []
+        exit.append(int(exit_point[0]))
+        exit.append(int(exit_point[1]))
 
         path = file.readline().replace("\n", "")
 
         width = Configuration.width
 
-    return {
-        "maze": lines_read, "entry": entry_point,
-        "exit": exit_point, "path": path,
-        "width": width
-    }
+    return lines_read, entry_point, exit_point, path, width
 
 
 def main() -> None:

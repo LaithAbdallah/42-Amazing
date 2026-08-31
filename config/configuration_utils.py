@@ -23,10 +23,15 @@ def get_config() -> dict[str, Any]:
         if key in ["ENTRY", "EXIT"]:
             value = convert_point(key, value)
         if key == "PERFECT":
-            value = True if value == "True" else False
+            if value == "True":
+                value = True
+            elif value == "False":
+                value = False
+            else:
+                raise ConfigError("Wrong value for PERFECT key.")
         if len(pair) > 2:
             raise ConfigError("Wrong Key=Value format.")
-        if key in config.keys():
+        if key.lower() in config.keys():
             raise ConfigError(f"Can't have two pairs of {key},"
                               f" Please remove one.")
         config[key.lower()] = value
