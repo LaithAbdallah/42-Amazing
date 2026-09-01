@@ -65,7 +65,12 @@ def convert_point(point: str, value: Any) -> dict[str, int] | None:
     Returns:
         dict[str, int]: The converted point dictionary with "x" and "y" keys,
         or None if the conversion fails.
+
+    Raises:
+        ConfigError: If one of the point's values isn't an integer
     """
+    from configuration import ConfigError
+
     value = value.split(",")
     try:
         converted_point = {
@@ -73,9 +78,8 @@ def convert_point(point: str, value: Any) -> dict[str, int] | None:
             "y": int(value[1])
         }
     except ValueError:
-        print(f"Wrong data type for {point} point,"
+        raise ConfigError(f"Wrong data type for {point} point,"
               f" It must contain integers")
-        return None
     return converted_point
 
 
@@ -90,7 +94,7 @@ def check_borders(border: str) -> None:
     Raises:
         ConfigError: If the border value is not a positive integer.
     """
-    from configuration.configuration import Configuration, ConfigError
+    from configuration import Configuration, ConfigError
 
     Configuration.load_config()
     attribute = getattr(Configuration, border)

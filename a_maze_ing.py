@@ -1,11 +1,24 @@
 from sys import argv
 from algorithm import run
-from configuration import Configuration, ConfigError
+from configuration import Configuration
 from graphical_display import display_output
 from typing import Any
 
 
 def send_specs() -> Any:
+    """
+    Read the generated maze file and collect everything the display needs.
+
+    The output file is expected to contain the maze grid as hexadecimal
+    characters, a blank line, the entry point, the exit point and the
+    solution path, in that order.
+
+    Returns:
+        A tuple of (maze, entry_point, exit_point, path, width) where maze
+        is the grid flattened into a single string, entry_point and
+        exit_point are ["x", "y"] string pairs, path is the sequence of
+        N/E/S/W moves and width is the maze width in cells.
+    """
 
     Configuration.load_config()
 
@@ -34,6 +47,14 @@ def send_specs() -> Any:
 
 
 def main() -> None:
+    """
+    Run the program end to end.
+
+    Checks the command line arguments, validates the configuration file,
+    generates and solves the maze, then opens the display window. Any
+    configuration error is reported and stops the run before anything is
+    drawn.
+    """
 
     if len(argv) != 2 or (len(argv) == 2 and argv[1] != "config.txt"):
         print("Usage: $> python3 a_maze_ing.py config.txt")
@@ -43,7 +64,7 @@ def main() -> None:
         return
     try:
         run()
-    except ConfigError as e:
+    except Exception as e:
         print(e)
         return
     display_output(send_specs(), True, True)

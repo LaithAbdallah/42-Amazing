@@ -1,3 +1,12 @@
+"""
+Standalone maze generation module.
+
+Builds a maze with an iterative depth-first search and backtracking,
+optionally braids it into an imperfect maze, and writes it out in a
+compact hexadecimal wall encoding. This module depends only on the
+standard library and can be imported into any other project.
+"""
+
 from random import randint, choice, seed
 
 
@@ -15,6 +24,9 @@ class Cell:
     """
 
     def __init__(self) -> None:
+        """
+        Create a cell with all four walls standing and unvisited.
+        """
 
         self.north = 1
         self.east = 1
@@ -45,9 +57,33 @@ class Cell:
 
 
 class MazeGenerator:
+    """
+        Generate a maze of a given size and write it to a file.
+
+        Attributes:
+            width: The maze width in cells.
+            height: The maze height in cells.
+            maze: The 2D grid of cells, empty until generate_paths is called.
+            entry: The entry point as {"x": column, "y": row}.
+            exit: The exit point as {"x": column, "y": row}.
+            perfect: True for exactly one route between any two cells,
+                False to braid the maze and introduce loops.
+            seed: A non-zero value makes generation reproducible.
+    """
 
     def __init__(self, width: int, height: int, entry: dict[str, int],
                  exit: dict[str, int], perfect: bool, seed: int):
+        """
+        Store the generation parameters without building anything yet.
+
+        Args:
+            width: The maze width in cells.
+            height: The maze height in cells.
+            entry: The entry point as {"x": column, "y": row}.
+            exit: The exit point as {"x": column, "y": row}.
+            perfect: True for a perfect maze, False for a braided one.
+            seed: A non-zero value makes generation reproducible.
+        """
 
         self.width = width
         self.height = height
@@ -57,15 +93,11 @@ class MazeGenerator:
         self.perfect = perfect
         self.seed = seed
 
-    # Checks if a cell has neighbours
     def has_neighbours(self, x: int, y: int) -> bool:
         """
         Check if a cell has any unvisited neighbours.
 
         Args:
-            height: The height of the maze in cells.
-            width: The width of the maze in cells.
-            maze: The 2D grid of cells.
             x: The row index of the cell.
             y: The column index of the cell.
 
@@ -99,7 +131,6 @@ class MazeGenerator:
             index: The axis to traverse,
               "x" for vertical and "y" for horizontal.
             times: The number of cells to mark.
-            maze: The 2D grid of cells.
             direction: The direction to traverse
             ("north", "south", "east", "west").
         """
@@ -124,11 +155,6 @@ class MazeGenerator:
         """
         Draw the number '4' in the center-left of the maze by
         marking cells as part of the '42' symbol.
-
-        Args:
-            height: The height of the maze in cells.
-            width: The width of the maze in cells.
-            maze: The 2D grid of cells.
         """
 
         center = (self.height // 2, self.width // 2)
@@ -144,11 +170,6 @@ class MazeGenerator:
         """
         Draw the number '2' in the center-right of the maze by
         marking cells as part of the '42' symbol.
-
-        Args:
-            height: The height of the maze in cells.
-            width: The width of the maze in cells.
-            maze: The 2D grid of cells.
         """
 
         center = (self.height // 2, self.width // 2)
@@ -170,9 +191,6 @@ class MazeGenerator:
         Draw the '42' symbol in the maze if dimensions allow it.
 
         Args:
-            height: The height of the maze in cells.
-            width: The width of the maze in cells.
-            maze: The 2D grid of cells.
             stack: The backtracking stack to push '42' cells onto.
 
         Returns:
@@ -181,7 +199,7 @@ class MazeGenerator:
 
         drew_42 = False
 
-        # Only draws '42' if its double the '42' drawing size (5 * 7)
+        # Only draws '42' if its the maze size is greater than (8 * 8)
         if self.height >= 9 and self.width >= 9:
             self.generate_number_4()
             self.generate_number_2()
@@ -203,6 +221,17 @@ class MazeGenerator:
         return drew_42
 
     def is_available(self, y: int, x: int) -> bool:
+        """
+        Check whether a cell can be carved into during braiding.
+
+        Args:
+            y: The row index of the cell.
+            x: The column index of the cell.
+
+        Returns:
+            True if the cell is inside the grid and is not part of the
+             "42" symbol, False otherwise.
+        """
 
         if y >= self.height or y < 0:
             return False
@@ -215,6 +244,16 @@ class MazeGenerator:
         return True
 
     def imperfect_maze(self) -> None:
+        """
+        Braid the maze by removing its dead ends.
+
+        Sweeps the grid looking for cells with exactly three standing
+        walls, which are precisely the dead ends, and breaks one wall at
+        random on each of them. Cells belonging to the "42" symbol are
+        left untouched. The sweep is repeated several times because
+        modifying the maze can create new dead ends that were not detected
+        during earlier sweeps.
+        """
 
         directions = ["north", "east", "west", "south"]
         height = self.height
@@ -222,7 +261,6 @@ class MazeGenerator:
 
         for i in range(7):
             for row in range(height):
-
                 for column in range(width):
 
                     walls = 0
@@ -269,15 +307,8 @@ class MazeGenerator:
                                     wall_broken = True
 
     def generate_maze(self) -> None:
-        """g import theme
-        Create a 2D grid of uninitialized cells.
-
-        Args:
-            height: The height of the maze in cells.
-            width: The width of the maze in cells.
-
-        Returns:
-            A 2D list of Cell objects with all walls closed.
+        """
+        Fill self.maze with a grid of cells that have all walls closed.
         """
 
         for row in range(self.height):
@@ -287,13 +318,17 @@ class MazeGenerator:
 
     def generate_paths(self, seed_id: int) -> list[list[Cell]]:
         """
-        Generate a perfect maze using iterative depth-first search
-        with backtracking.
+        Generate the maze using iterative depth-first search with
+        backtracking, then braid it if perfect is False.
 
         Args:
-            height: The height of the maze in cells.
-            width: The width of the maze in cells.
+            seed_id: A non-zero value seeds the random generator so the
+                same maze is produced on every run.
+
+        Returns:
+            The 2D grid of cells, with the carved walls applied.
         """
+
         self.generate_maze()
 
         if seed_id:
@@ -347,22 +382,21 @@ class MazeGenerator:
                 stack.pop()
                 x, y = stack[-1][0], stack[-1][1]
 
-        # maze_output(height, width, maze)  # To be moved later
         if not self.perfect:
             self.imperfect_maze()
 
         return self.maze
 
-    # Gets hexa representation for a single maze cell,
-    # since north is LSB its 1, then 2 for east, 4 for south and 8 for west
     def get_hexa(self, x: int, y: int) -> str:
         """
         Get the hex representation of a cell's wall configuration.
 
+        The north wall is the least significant bit and is worth 1,
+        then 2 for east, 4 for south and 8 for west.
+
         Args:
             x: The row index of the cell.
             y: The column index of the cell.
-            maze: The 2D grid of cells.
 
         Returns:
             A single hex character representing the cell's wall states.
@@ -385,9 +419,7 @@ class MazeGenerator:
         Write the maze to the output file in hex format.
 
         Args:
-            height: The height of the maze in cells.
-            width: The width of the maze in cells.
-            maze: The 2D grid of cells.
+            output_file: The path of the file to write to.
         """
 
         with open(output_file, "w") as file:
@@ -398,6 +430,12 @@ class MazeGenerator:
 
 
 def main() -> None:
+    """
+    Demonstrate the module on its own, without the rest of the project.
+
+    Generates a 55x35 braided maze with a fixed seed and writes it to
+    output.txt, which makes the generator testable in isolation.
+    """
 
     width = 55
     height = 35

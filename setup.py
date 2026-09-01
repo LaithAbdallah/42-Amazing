@@ -1,10 +1,10 @@
 from setuptools import setup
 setup(
     name="mazegen",
-    version="1.0.0",
+    version="1.0.1",
     author="labdalla, naldibis",
     description="A lightweight procedural maze generator for 42 curriculum",
-    packages=["maze_generation"],
+    packages=["mazegen"],
     install_requires=[
         "requests>=2.25.1",
     ],

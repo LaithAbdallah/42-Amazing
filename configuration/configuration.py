@@ -14,6 +14,8 @@ class Configuration:
         output_file: The path to the output file.
         perfect: If True, the maze will have exactly one
          path between the entry and the exit.
+        seed: if zero, then it will regenrate randomly every time,
+         other than that it would generate the same maze using the same seed
     """
 
     width: int = 1
@@ -23,7 +25,6 @@ class Configuration:
     output_file: str = ""
     perfect: bool = True
     seed: int = 0
-    # More keys to be added?
 
     @classmethod
     def load_config(cls) -> bool:
@@ -44,7 +45,7 @@ class Configuration:
             if hasattr(cls, key):
                 setattr(cls, key, value)
                 number_of_keys += 1
-        if number_of_keys < 6:  # Must be changed if we add more keys
+        if number_of_keys < 6:  # seed is optional
             print("Missing some keys, Please check.")
             return False
         return True

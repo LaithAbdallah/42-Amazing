@@ -12,11 +12,33 @@ show_path = True
 
 
 def get_center(width: int, maze_width: int) -> int:
+    """
+    Compute the x offset that horizontally centers the maze.
+
+    Args:
+        width: The available width in pixels.
+        maze_width: The maze width in cells.
+
+    Returns:
+        The x coordinate at which the first column should be drawn.
+    """
+
     pixels_width = 26 * maze_width - 6
     return (width - pixels_width) // 2
 
 
 def get_coordinates(x: int, y: int, point: list[int]) -> list[int]:
+    """
+    Convert a maze cell position into pixel coordinates.
+
+    Args:
+        x: The x offset of the maze origin in pixels.
+        y: The y offset of the maze origin in pixels.
+        point: The cell as a [column, row] pair.
+
+    Returns:
+        The [x, y] pixel coordinates of that cell's top-left corner.
+    """
 
     coordinates = [x + 26 * int(point[0]), y + 26 * int(point[1])]
 
@@ -29,6 +51,19 @@ def get_coordinates(x: int, y: int, point: list[int]) -> list[int]:
 
 
 def draw_empty_maze(maze: str, maze_width: int, x: int, y: int) -> None:
+    """
+    Draw the maze grid without its solution path.
+
+    Each hexadecimal character is mapped to the tile of the current theme
+    that matches its wall configuration, and a new row is started every
+    maze_width characters.
+
+    Args:
+        maze: The maze grid flattened into a single string.
+        maze_width: The maze width in cells.
+        x: The x offset of the maze origin in pixels.
+        y: The y offset of the maze origin in pixels.
+    """
 
     cells = 1
 
@@ -48,6 +83,18 @@ def draw_empty_maze(maze: str, maze_width: int, x: int, y: int) -> None:
 
 
 def draw_path(path: str, start_point: list[int]) -> None:
+    """
+    Animate the solution path from the entry point.
+
+    Each move advances one tile in the matching direction and a short
+    delay is applied between tiles so the route is drawn progressively
+    rather than all at once. The last move is skipped so the exit marker
+    stays visible.
+
+    Args:
+        path: The solution as a string of N/E/S/W moves.
+        start_point: The [x, y] pixel coordinates of the entry point.
+    """
 
     # Start_point is a list of 2 integers, [0] is width and [1] is height
     x = start_point[0]
@@ -73,6 +120,13 @@ def draw_path(path: str, start_point: list[int]) -> None:
 
 
 def draw_points(entry_coords: list[int], exit_coords: list[int]) -> None:
+    """
+    Draw the entry and exit markers of the current theme.
+
+    Args:
+        entry_coords: The [x, y] pixel coordinates of the entry point.
+        exit_coords: The [x, y] pixel coordinates of the exit point.
+    """
 
     entry_img = mlx.mlx_png_file_to_image(connection,
                                           themes[theme_index]["entry"])
@@ -86,6 +140,13 @@ def draw_points(entry_coords: list[int], exit_coords: list[int]) -> None:
 
 
 def draw_controls(x: int) -> None:
+    """
+    Draw the keyboard control legend down the left side of the window.
+
+    Args:
+        x: The y coordinate of the first legend image, the following ones
+            being spaced 100 pixels apart below it.
+    """
 
     quit_img = mlx.mlx_png_file_to_image(connection, controls_set["q"])
     regen_img = mlx.mlx_png_file_to_image(connection, controls_set["r"])
@@ -103,6 +164,22 @@ def draw_controls(x: int) -> None:
 
 
 def display_output(specs: Any, first_time: bool, show: bool) -> None:
+    """
+    Draw a complete frame and register the keyboard handler.
+
+    Renders the background, the maze, the entry and exit markers and the
+    control legend, then optionally the solution path. The specs are kept
+    in a module level variable so the key handler can redraw without
+    reading the output file again.
+
+    Args:
+        specs: The tuple returned by send_specs, holding the maze, the
+            entry and exit points, the path and the maze width.
+        first_time: True on the first call, which starts the MLX event
+            loop. Later redraws must pass False so the loop is not
+            started twice.
+        show: True to draw the solution path, False to hide it.
+    """
 
     global data  # check if the global is allowed
     data = specs  # to use it on change color and remove the path
@@ -134,6 +211,19 @@ def display_output(specs: Any, first_time: bool, show: bool) -> None:
 
 
 def buttons(keynum: int, mystuff: dict[str, Any]) -> None:
+    """
+    Handle a key press and redraw the window accordingly.
+
+    Q closes the window and releases the MLX connection, C cycles to the
+    next theme, R regenerates and solves a brand new maze, and S toggles
+    the solution path. Both lower and upper case are accepted.
+
+    Args:
+        keynum: The key code of the pressed key.
+        mystuff: The MLX context, holding the connection pointer under
+            "m_ptr", the window pointer under "w_ptr" and the MLX
+            instance under "mlx".
+    """
 
     global theme_index
     global data
