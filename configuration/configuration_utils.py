@@ -13,6 +13,8 @@ def get_config() -> dict[str, Any]:
     config: dict[str, Any] = dict()
     lines = read_config()
     for line in lines:
+        if "=" not in line:
+            raise ConfigError("Wrong KEY=VALUE Format")
         pair = line.replace(" ", "").split("=")
         key = pair[0]
         value: Any = pair[1]
@@ -71,6 +73,9 @@ def convert_point(point: str, value: Any) -> dict[str, int] | None:
     """
     from configuration import ConfigError
 
+    value = str(value)
+    if "," not in value:
+        raise ConfigError(f"Wrong format for {point}")
     value = value.split(",")
     try:
         converted_point = {
@@ -96,7 +101,7 @@ def check_borders(border: str) -> None:
     """
     from configuration import Configuration, ConfigError
 
-    Configuration.load_config()
+    Configuration.load_config(False)
     attribute = getattr(Configuration, border)
 
     if isinstance(attribute, int):
@@ -128,7 +133,7 @@ def check_points(point: str) -> None:
     """
     from configuration.configuration import Configuration, ConfigError
 
-    Configuration.load_config()
+    Configuration.load_config(False)
     attribute = getattr(Configuration, point)
 
     if attribute["x"] >= Configuration.width:

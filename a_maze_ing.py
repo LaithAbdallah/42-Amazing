@@ -20,7 +20,7 @@ def send_specs() -> Any:
         N/E/S/W moves and width is the maze width in cells.
     """
 
-    Configuration.load_config()
+    Configuration.load_config(False)
 
     with open(Configuration.output_file, "r") as file:
 

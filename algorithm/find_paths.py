@@ -20,7 +20,7 @@ class BFS:
             south, west, east.
     """
 
-    config.load_config()
+    config.load_config(True)
     cells: list[list[Cell]] = []  # get the maze
     start = (config.entry["x"], config.entry["y"])  # get the start point
     exit = (config.exit["x"], config.exit["y"])  # get the exit point
@@ -197,13 +197,13 @@ def run() -> None:
     interface between the solving stage and the display stage.
     """
 
-    config.load_config()
+    config.load_config(False)
 
     generator = MazeGenerator(config.width, config.height, config.entry,
                               config.exit, config.perfect, config.seed)
     maze = BFS()
     path = maze.get_path(generator)
-    generator.maze_output("maze.txt")
+    generator.maze_output(config.output_file)
     with open(config.output_file, "a") as file:
         file.write(f"\n{maze.start[0]}, {maze.start[1]}\n")
         file.write(f"{maze.exit[0]}, {maze.exit[1]}\n")

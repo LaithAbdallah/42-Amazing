@@ -27,27 +27,35 @@ class Configuration:
     seed: int = 0
 
     @classmethod
-    def load_config(cls) -> bool:
+    def load_config(cls, show_exceptions: bool) -> bool:
         """
         Load configuration values.
+
+        Args:
+            show_exception: If true raise exceptions, otherwise don't
 
         Returns:
             bool: True if the configuration was loaded successfully,
             otherwise False.
         """
+        # Seed is optional
+        keys = ["width", "height", "entry", "exit", "output_file", "perfect"]
         try:
             config = get_config()
         except ConfigError as error:
-            print(error)
+            if show_exceptions:
+                print(error)
             return False
         number_of_keys = 0
         for key, value in config.items():
             if hasattr(cls, key):
                 setattr(cls, key, value)
                 number_of_keys += 1
-        if number_of_keys < 6:  # seed is optional
-            print("Missing some keys, Please check.")
-            return False
+        for key in keys:
+            if key not in config.keys():
+                if show_exceptions:
+                    print("Missing some keys, Please check.")
+                return False
         return True
 
     @classmethod
@@ -59,7 +67,7 @@ class Configuration:
             bool: True if the configuration is valid,
             otherwise False.
         """
-        if not cls.load_config():
+        if not cls.load_config(False):
             return False
 
         try:
