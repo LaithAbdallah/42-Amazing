@@ -1,6 +1,6 @@
 install:
 	pip install -q mlx-2.2-py3-none-any.whl
-# 	pip install -q 
+	pip install -q mazegen-1.0.0-py3-none-any.whl
 
 run: install
 	python3 a_maze_ing.py config.txt
